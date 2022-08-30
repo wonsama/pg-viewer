@@ -1,0 +1,64 @@
+// file : wsm-pg.js
+// desc : postgresql 유틸
+// lastupdate : 22.08.25
+//
+// see more : https://node-postgres.com/
+//
+
+const fs = require("fs");
+const { join } = require("path");
+
+const { Pool } = require("pg");
+
+// pool.query("SELECT NOW()", (err, res) => {
+//   console.log(err, res);
+//   pool.end();
+// });
+
+/**
+ * 쿼리 정보를 읽어들인다
+ * @param {string} domain 업무구분
+ * @param {string} seq 4자리 시퀀스, 0000 부터 시작
+ * @param {string} params 파라미터 목록 (sql에서는 1부터 매칭)
+ */
+function _load(domain = "st", seq = "0000", params = []) {
+  let sql = fs.readFileSync(
+    join(__dirname, `../sql/${domain}/${seq}.sql`),
+    "utf-8"
+  );
+
+  for (let i = 0; i < params.length; i++) {
+    var replace = `\\$${i + 1}`;
+    var re = new RegExp(replace, "gi");
+    sql = sql.replace(re, params[i]);
+  }
+  return sql;
+}
+
+/**
+ * 쿼리를 수행한다 (async)
+ * @param {string} domain 업무구분
+ * @param {string} seq 4자리 시퀀스, 0000 부터 시작
+ * @param {string} params 파라미터 목록 (sql에서는 1부터 매칭)
+ */
+function query(domain = "st", seq = "0000", params = []) {
+  const sql = _load(domain, seq, params);
+
+  return new Promise((resolve, reject) => {
+    const pool = new Pool();
+    pool.query(sql, (err, res) => {
+      // return
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+      // close pool
+      pool.end();
+    });
+  });
+}
+
+module.exports = {
+  query,
+};

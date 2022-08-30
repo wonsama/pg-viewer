@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# wonsama added
+npm_packages
+.DS_Store
+test*.js
+yarn.lock

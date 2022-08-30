@@ -1,0 +1,18 @@
+doctype html
+include ./_partials/banner.pug
+include ./_mixins/page-footer.pug
+include ./_mixins/page-header.pug
+include ./_mixins/page-list.pug
+include ./_mixins/page-search-bar.pug
+
+html(lang='en')
+  head
+    include ./_partials/header.pug
+    block canonical
+    block styles
+  body.bg-black
+    .container
+      block content
+
+    scripts
+      include ./_partials/scripts.pug

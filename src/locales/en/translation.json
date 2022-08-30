@@ -1,0 +1,79 @@
+{
+  "header": {
+    "round": "Round {{round}} rewards",
+    "login": "LOGIN",
+    "logout": "LOGOUT",
+    "language": "LANG"
+  },
+  "menus": {
+    "join": "PLAY",
+    "history": "HISTORY",
+    "voting": "VOTING",
+    "rank": "RANK",
+    "howto": "HOWTO"
+  },
+  "table": {
+    "header": {
+      "day": "DAY",
+      "runner": "RUNNER",
+      "time_join": "JOIN TIME",
+      "time_voting": "VOTING TIME",
+      "time_lastjoin": "LAST JOIN TIME",
+      "boost": "BOOST",
+      "title": "TITLE",
+      "moved": "MOVED",
+      "join": "JOIN",
+      "move": "MOVE"
+    },
+    "caption": {
+      "history": "View recent participation history (up to 100)",
+      "voting": "View recent voting history (up to 100)",
+      "rank": "View current participant rankings",
+      "howto": ""
+    },
+    "button": {
+      "move": "MOVE"
+    }
+  },
+  "howto": {
+    "game": {
+      "title": "How to play",
+      "items": [
+        "Join by clicking the join button",
+        "Keychain installation required",
+        "1 STEEM is consumed per participation.",
+        "Move 0~9m when participating.",
+        "The first person to reach 50m wins."
+      ]
+    },
+    "account": {
+      "title": "Steem Account",
+      "items": ["Create a free STEEM account"]
+    },
+    "features": {
+      "title": "Game features",
+      "items": [
+        "If there is no winner by the 10th day, the prize money will be carried over",
+        "You can participate up to 10 times a day",
+        "In case of re-entry (boost) on the same day, the previous run on the same day is invalid",
+        "2 STEEM is consumed for non-participation days.",
+        "Re-entry (boost) is not possible on non-participation days"
+      ]
+    },
+    "reward": {
+      "title": "Rewards",
+      "items": [
+        "1st place gets 15% of the prize pool",
+        "When participating in the game, voting is performed on the latest post of the participating account",
+        "We plan to make sure that the voting amount is more than the participation amount as much as possible."
+      ]
+    },
+    "etc": {
+      "title": "Etc.",
+      "items": [
+        "10% power up of prize pool at end of round",
+        "5% maintenance fee of prize pool at the end of round"
+      ]
+    }
+  }
+}
