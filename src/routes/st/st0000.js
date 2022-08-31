@@ -1,16 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const { query } = require("../../libs/wsm-pg");
+const { getQuery } = require("../../libs/wsm-pg");
 const { getPageDesc } = require("../../libs/wsm-string");
+const pageTitle = "스팀잇 최신글 조회";
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  let { domain, seq, desc } = getPageDesc(
-    `스팀잇 최신글 조회`,
-    __dirname,
-    __filename
-  );
+  let { domain, seq, desc } = getPageDesc(pageTitle, __dirname, __filename);
 
   let _query = req.query.author
     ? [
@@ -23,7 +20,7 @@ router.get("/", function (req, res, next) {
         req.query.offset || 0, // start at : 0
       ];
 
-  query(domain, req.query.author ? seq : seq + "-1", _query).then(
+  getQuery("STEEM", domain, req.query.author ? seq : seq + "-1", _query).then(
     (response) => {
       res.render(`./${domain}/${seq}`, {
         domain,

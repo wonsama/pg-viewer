@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "DEBUG=pg-viewer:* ./node_modules/.bin/nodemon ./bin/www",
+    "mdev": "DEBUG=pg-viewer:* ./node_modules/.bin/nodemon ./bin/www",
+    "wdev": "SET DEBUG=pg-viewer:* & nodemon ./bin/www",
+    "wtest": "SET DEBUG=pg-viewer:* & node test",
+    "wgen": "SET DEBUG=pg-viewer:* & node ./src/libs/wsm-generate",
     "debug": "DEBUG=* ./node_modules/.bin/nodemon ./bin/www",
     "package": "rm -rf node_modules;rm yarn.lock;yarn cache clean;yarn install"
   },

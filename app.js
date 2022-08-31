@@ -16,6 +16,8 @@ const i18nextMiddlerware = require("i18next-http-middleware");
 const { readdirSync, lstatSync } = require("fs");
 const { join } = require("path");
 
+const { getRoutes } = require("./src/libs/wsm-path");
+
 var app = express();
 const localesFolder = join(__dirname, "./src/locales");
 i18next
@@ -62,7 +64,12 @@ app.use(bodyParser.urlencoded({ extended: false })); // URL-encoded 등록
 
 // 라우팅 설정
 app.use("/", require("./src/routes/index"));
-app.use("/st/st0000", require("./src/routes/st/st0000"));
+let routes = getRoutes();
+for (let r of routes) {
+  app.use(r.path, require(r.require));
+}
+// app.use("/st/st0000", require("./src/routes/st/st0000"));
+// app.use("/pg/pg0000", require("./src/routes/pg/pg0000"));
 
 // catch 404 and forward to error handler
 app.use(function (err, req, res, next) {

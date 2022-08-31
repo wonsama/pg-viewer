@@ -12,9 +12,9 @@
  * @param {string} desc 파일명 ( __filename ) 넣어주기
  */
 function getPageDesc(desc, dirname, filename) {
-  let _domain = dirname.split("/");
+  let _domain = dirname.split(/[\\/]+/);
   let domain = _domain[_domain.length - 1];
-  let _seq = filename.split("/");
+  let _seq = filename.split(/[\\/]+/);
   let seq = _seq[_seq.length - 1].split(".")[0];
 
   return { domain, seq, desc };

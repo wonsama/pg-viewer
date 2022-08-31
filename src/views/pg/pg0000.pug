@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+  -var headers = ['tablename', 'hasindexes', 'tablespace', 'tabledesc'];
+  +pageHeader(domain, seq, desc)
+  +pageSearchBar([])
+  +pageList(rows, headers)
+  +pageFooter()
+  
+
+block scripts 
+  script(src='/js/pg/pg0000.js')

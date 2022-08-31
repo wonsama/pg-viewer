@@ -108,3 +108,5 @@ npm_packages
 .DS_Store
 test*.js
 yarn.lock
+configs/dc/*
+!configs/dc/docker-compose.yml
