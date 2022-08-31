@@ -87,6 +87,7 @@ function _genPug(domain = "te", seq = "te0000", pageTitle = "test 입니다.") {
   contents.push(
     `\t//-+pageSearchBar([{placeholder:'MODIFY_INPUT_PLACE_HOLDER', id:'MODIFY_INPUT_ID_LOWERCASE', label:'MODIFY_INPUT_LABEL', ;value:'MODIFY_INPUT_VALUE'}])`
   );
+  contents.push(`\t+pageSearchBar([])`); // 기본적으로 값이 없어도 있어야 form을 생성
   contents.push(`\t+pageList(rows, headers)`);
   contents.push(`\t+pageFooter()`);
   contents.push(``);
