@@ -110,3 +110,8 @@ test*.js
 yarn.lock
 configs/dc/*
 !configs/dc/docker-compose.yml
+
+src/public/js/te/*
+src/routes/te/*
+src/sql/te/*
+src/views/te/*

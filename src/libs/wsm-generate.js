@@ -137,18 +137,18 @@ function _genRoutes(domain = "te", seq = "te0000", pageTitle = "test 입니다."
   contents.push(``);
   contents.push(`/* MODIFY_GET_HERE */`);
   contents.push(`router.get("/", function (req, res, next) {`);
+  contents.push(``);
+  contents.push(`\tconst limit = req.query.limit || 10;`);
+  contents.push(`\tconst offset = req.query.offset || 0;`);
+  contents.push(`\tconst DB_TARGET = "MODIFY_HERE";`);
+  contents.push(``);
   contents.push(
     `  let { domain, seq, desc } = getPageDesc(pageTitle, __dirname, __filename);`
   );
   contents.push(``);
-  contents.push(`  let _query = [`);
-  contents.push(`        req.query.limit || 10, // default : 10`);
-  contents.push(`        req.query.offset || 0, // start at : 0`);
-  contents.push(`      ];`);
+  contents.push(`  let _query = [limit,offset];`);
   contents.push(``);
-  contents.push(
-    `  getQuery("MODIFY_DOTENV_DB_PREFIX", domain, seq, _query).then(`
-  );
+  contents.push(`  getQuery(DB_TARGET, domain, seq, _query).then(`);
   contents.push(`    (response) => {`);
   contents.push("      res.render(`./${domain}/${seq}`, {");
   contents.push(`        domain,`);
@@ -156,8 +156,8 @@ function _genRoutes(domain = "te", seq = "te0000", pageTitle = "test 입니다."
   contents.push(`        desc,`);
   contents.push("        title: `${domain} - ${seq} : ${desc}`,");
   contents.push(`        rows: response.rows,`);
-  contents.push(`        limit: req.query.limit || 10,`);
-  contents.push(`        offset: req.query.offset || 0,`);
+  contents.push(`        limit,`);
+  contents.push(`        offset,`);
   contents.push(`      });`);
   contents.push(`    }`);
   contents.push(`  );`);
