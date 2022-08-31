@@ -3,7 +3,7 @@ extends ../layout
 block content
   -var headers = ['tablename', 'hasindexes', 'tablespace', 'tabledesc'];
   +pageHeader(domain, seq, desc)
-  +pageSearchBar([])
+  +pageSearchBar([{placeholder:'LIKE:테이블명', id:'tablename', label:'테이블명', value:tablename},{placeholder:'LIKE:테이블설명', id:'tabledesc', label:'테이블설명', value:tabledesc}])
   +pageList(rows, headers)
   +pageFooter()
   

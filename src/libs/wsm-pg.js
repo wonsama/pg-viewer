@@ -28,7 +28,12 @@ function _load(domain = "st", seq = "0000", params = []) {
     var re = new RegExp(replace, "gi");
     sql = sql.replace(re, params[i]);
   }
-  return sql;
+
+  let split = sql.replace(/\n/gi, "").split("\r");
+  split = split.filter((x) => x.indexOf(":exist()") == -1);
+  split = split.map((x) => x.replace(/\:exist\(.*\)\s/, ""));
+
+  return split.join("\r");
 }
 
 /**
