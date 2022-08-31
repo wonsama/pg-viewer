@@ -162,7 +162,7 @@ function _genRoutes(domain = "te", seq = "te0000", pageTitle = "test 입니다."
   contents.push(`  );`);
   contents.push(`});`);
   contents.push(``);
-  contents.push(`module.exports = router;`);
+  contents.push(`module.exports = {router, title : pageTitle};`);
 
   // 2. 파일 생성
   // js-route : src/routes/[domain]/[seq].js : 라우팅(get url) 정보

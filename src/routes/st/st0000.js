@@ -36,4 +36,4 @@ router.get("/", function (req, res, next) {
   );
 });
 
-module.exports = router;
+module.exports = { router, title: pageTitle };

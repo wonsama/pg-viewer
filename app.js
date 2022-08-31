@@ -66,7 +66,7 @@ app.use(bodyParser.urlencoded({ extended: false })); // URL-encoded 등록
 app.use("/", require("./src/routes/index"));
 let routes = getRoutes();
 for (let r of routes) {
-  app.use(r.path, require(r.require));
+  app.use(r.path, require(r.require).router);
 }
 // app.use("/st/st0000", require("./src/routes/st/st0000"));
 // app.use("/pg/pg0000", require("./src/routes/pg/pg0000"));
