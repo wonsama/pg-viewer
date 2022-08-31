@@ -7,9 +7,9 @@ where post_id in
 SELECT post_id
 FROM public.hive_feed_cache
 where 1=1
-and account_id = (select id from public.hive_accounts where name = '$1')
+and account_id = (select id from public.hive_accounts where name = '$3')
 )
-and author = '$1'
+and author = '$3'
 order by post_id desc
-limit $2 -- limit : default 10
-offset $3 -- offset : start at 0
+limit $1 -- limit : default 10
+offset $2 -- offset : start at 0

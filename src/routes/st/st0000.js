@@ -11,9 +11,9 @@ router.get("/", function (req, res, next) {
 
   let _query = req.query.author
     ? [
-        req.query.author,
         req.query.limit || 10, // default : 10
         req.query.offset || 0, // start at : 0
+        req.query.author,
       ]
     : [
         req.query.limit || 10, // default : 10
@@ -22,6 +22,9 @@ router.get("/", function (req, res, next) {
 
   getQuery("STEEM", domain, req.query.author ? seq : seq + "-1", _query).then(
     (response) => {
+      console.log(domain, seq, _query);
+      console.log(response);
+
       res.render(`./${domain}/${seq}`, {
         domain,
         seq,

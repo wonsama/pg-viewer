@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "mdev": "DEBUG=pg-viewer:* ./node_modules/.bin/nodemon ./bin/www",
+    "mgen": "DEBUG=pg-viewer:* node ./src/libs/wsm-generate",
     "wdev": "SET DEBUG=pg-viewer:* & nodemon ./bin/www",
     "wtest": "SET DEBUG=pg-viewer:* & node test",
     "wgen": "SET DEBUG=pg-viewer:* & node ./src/libs/wsm-generate",
