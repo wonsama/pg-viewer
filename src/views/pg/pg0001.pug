@@ -1,1 +1,15 @@
-//- file : pg0001.pug//- title : MODIFY_PAGE_TITLE//- @since 2022-08-31T11:27:53.879Z (UTC)extends ../layoutblock content	-var headers = ['modify_header_1', 'modify_header_2'];	+pageHeader(domain, seq, desc)	//-+pageSearchBar([{placeholder:'MODIFY_INPUT_PLACE_HOLDER', id:'MODIFY_INPUT_ID_LOWERCASE', label:'MODIFY_INPUT_LABEL', ;value:'MODIFY_INPUT_VALUE'}])	+pageSearchBar([])	+pageList(rows, headers)	+pageFooter()block scripts 	script(src='/js/pg/pg0001.js')
+//- file : pg0001.pug
+//- title : MODIFY_PAGE_TITLE
+//- @since 2022-08-31T11:27:53.879Z (UTC)
+extends ../layout
+
+block content
+	-var headers = ['column_name', 'comment', 'data_type', 'len', 'is_nullable', 'column_default', 'constraint_name', 'constraint_type'];
+	+pageHeader(domain, seq, desc)
+	//-+pageSearchBar([{placeholder:'MODIFY_INPUT_PLACE_HOLDER', id:'MODIFY_INPUT_ID_LOWERCASE', label:'MODIFY_INPUT_LABEL', ;value:'MODIFY_INPUT_VALUE'}])
+	+pageSearchBar([{placeholder:'must:테이블명을 입력 바랍니다.', id:'table_name', label:'테이블명', value:table_name}])
+	+pageList(rows, headers)
+	+pageFooter()
+
+block scripts 
+	script(src='/js/pg/pg0001.js')

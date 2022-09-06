@@ -3,10 +3,16 @@ console.log("common.js loaded");
 
 const elFormPageSearchBar = document.querySelector("#formPageSearchBar");
 elFormPageSearchBar.onsubmit = (e) => {
+  // e.preventDefault();
+
+  // 전송 값 trim 처리
+  let items = document.getElementsByClassName("search-bar-item");
+  for (let item of items) {
+    item.value = item.value ? item.value.trim() : "";
+  }
+
+  // page offset
   let elOffset = document.getElementById("offset");
-
-  e.preventDefault();
-
   elOffset.value = 0;
   elFormPageSearchBar.submit();
 };

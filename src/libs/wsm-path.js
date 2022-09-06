@@ -26,10 +26,18 @@ function getRoutes() {
       return !lstatSync(joinedPath).isDirectory();
     });
     for (let fname of fnames) {
-      results.push({
-        path: `/${folder}/${fname.split(".")[0]}`,
-        require: `./src/routes/${folder}/${fname.split(".")[0]}`,
-      });
+      let sc_desc = fname.split(".")[0];
+      if (sc_desc != "index") {
+        results.push({
+          path: `/${folder}/${sc_desc}`,
+          require: `./src/routes/${folder}/${sc_desc}`,
+        });
+      } else {
+        results.push({
+          path: `/${folder}`,
+          require: `./src/routes/${folder}/${sc_desc}`,
+        });
+      }
     }
   }
   return results;

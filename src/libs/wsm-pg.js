@@ -31,7 +31,7 @@ function _load(domain = "st", seq = "0000", params = []) {
 
   // let split = sql.replace(/\n/gi, "").split("\r");
   let split = sql.split("\r");
-  console.log("split", split);
+  // console.log("split", split);
 
   split = split.filter((x) => x.indexOf(":exist()") == -1);
   split = split.map((x) => x.replace(/\:exist\(.*\)\s/, ""));
@@ -55,8 +55,8 @@ async function getQuery(prefix, domain, seq, params) {
   let res = await client.query(_load(domain, seq, params), []);
   client.end();
 
-  console.log("_load(domain, seq, params)", _load(domain, seq, params));
-  console.log(res);
+  // console.log("_load(domain, seq, params)", _load(domain, seq, params));
+  // console.log(res);
 
   return {
     fields: res.fields.map((x) => x.name),

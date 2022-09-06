@@ -115,3 +115,5 @@ src/public/js/te/*
 src/routes/te/*
 src/sql/te/*
 src/views/te/*
+
+output.xlsx

@@ -84,10 +84,10 @@ function _genPug(domain = "te", seq = "te0000", pageTitle = "test 입니다.") {
   contents.push(`block content`);
   contents.push(`\t-var headers = ['modify_header_1', 'modify_header_2'];`);
   contents.push(`\t+pageHeader(domain, seq, desc)`);
-  contents.push(
-    `\t//-+pageSearchBar([{placeholder:'MODIFY_INPUT_PLACE_HOLDER', id:'MODIFY_INPUT_ID_LOWERCASE', label:'MODIFY_INPUT_LABEL', ;value:'MODIFY_INPUT_VALUE'}])`
-  );
-  contents.push(`\t+pageSearchBar([])`); // 기본적으로 값이 없어도 있어야 form을 생성
+  // contents.push(
+  //   `\t//-+pageSearchBar([{placeholder:'MODIFY_INPUT_PLACE_HOLDER', id:'MODIFY_INPUT_ID_LOWERCASE', label:'MODIFY_INPUT_LABEL', ;value:'MODIFY_INPUT_VALUE'}])`
+  // );
+  contents.push(`\t+pageSearchBar([search_bar])`); // 기본적으로 값이 없어도 있어야 form을 생성
   contents.push(`\t+pageList(rows, headers)`);
   contents.push(`\t+pageFooter()`);
   contents.push(``);
@@ -158,6 +158,10 @@ function _genRoutes(domain = "te", seq = "te0000", pageTitle = "test 입니다."
   contents.push(`        rows: response.rows,`);
   contents.push(`        limit,`);
   contents.push(`        offset,`);
+  contents.push(`        search_bar,`);
+  contents.push(`        headers,`);
+  contents.push(``);
+  contents.push(`        // added search params`);
   contents.push(`      });`);
   contents.push(`    }`);
   contents.push(`  );`);

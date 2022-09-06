@@ -1,0 +1,14 @@
+//- file : index.pug
+//- title : MODIFY_PAGE_TITLE
+//- @since 2022-08-31T11:27:53.879Z (UTC)
+extends ../layout
+
+block content
+	-var headers = ['pg_no', 'sc_desc'];
+	+pageHeader(domain, seq, desc)
+	+pageSearchBar([{placeholder:'like:화면 상세 정보를 입력바랍니다.', id:'sc_desc', label:'PG 화면 상세정보', value:sc_desc}])
+	+pageList(rows, headers)
+	+pageFooter()
+
+block scripts 
+	script(src='/js/pg/index.js')
