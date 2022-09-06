@@ -70,6 +70,7 @@ router.get("/download", function (req, res, next) {
 
     // SET HEADER
     ws_data[0] = new Array();
+    ws_data[0].push("no");
     for (let header of headers) {
       ws_data[0].push(header);
     }
@@ -77,9 +78,11 @@ router.get("/download", function (req, res, next) {
     // SET BODY
     for (let row of response.rows) {
       ws_data[count] = new Array();
+      ws_data[count].push(count);
       for (let header of headers) {
         ws_data[count].push(row[header]);
       }
+      count++;
     }
 
     // MAKE XLSX
