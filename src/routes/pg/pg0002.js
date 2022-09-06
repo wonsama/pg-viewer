@@ -1,3 +1,6 @@
+// file : pg0002.js
+// title : MODIFY_PAGE_TITLE
+// @since 2022-09-06T14:27:55.650Z (UTC)
 const express = require("express");
 const router = express.Router();
 
@@ -8,9 +11,18 @@ const xlsx = require("xlsx");
 
 // PAGE title, headers, db target
 // if needed, it will changeable with request parameter.
-let pageTitle = "테이블 목록 조회";
-let headers = ["tablename", "hasindexes", "tablespace", "tabledesc"];
-let db_target = "STEEM";
+let pageTitle = "테이블 상세 목록 조회";
+let headers = [
+  "column_name",
+  "comment",
+  "data_type",
+  "len",
+  "is_nullable",
+  "column_default",
+  "constraint_name",
+  "constraint_type",
+]; // MODIFY_HERE
+let db_target = "STEEM"; // MODIFY_HERE
 
 router.get("/", function (req, res, next) {
   // DEFAULT PARAM
@@ -18,32 +30,27 @@ router.get("/", function (req, res, next) {
   const offset = req.query.offset || 0;
 
   // ADDITIONAL PARAM
-  const tablename = req.query.tablename || "";
-  const tabledesc = req.query.tabledesc || "";
+  const table_name = req.query.table_name || "";
 
   let { domain, seq, desc } = getPageDesc(pageTitle, __dirname, __filename);
 
   // QUERY : DEFAULT PARAM + ADDITIONAL PARAM
-  let _query = [limit, offset, tablename, tabledesc];
+  let _query = [limit, offset, table_name]; // MODIFY_HERE
 
   // SEARCH : ADDITIONAL PARAM
   const search_bar = [
     {
-      placeholder: "LIKE:테이블명",
-      id: "tablename",
+      placeholder: "MUST:테이블명",
+      id: "table_name",
       label: "테이블명",
-      value: tablename,
+      value: table_name,
     },
-    {
-      placeholder: "LIKE:테이블설명",
-      id: "tabledesc",
-      label: "테이블설명",
-      value: tabledesc,
-    },
-  ];
+  ]; // MODIFY_HERE
 
   // DB QUERY & RETURN RESULT-SET
   getQuery(db_target, domain, seq, _query).then((response) => {
+    console.log("response.rows", response.rows);
+
     res.render(`./${domain}/${seq}`, {
       domain,
       seq,
@@ -57,8 +64,7 @@ router.get("/", function (req, res, next) {
       headers,
 
       // ADDTIONAL PARAM
-      tablename,
-      tabledesc,
+      table_name,
     });
   });
 });
@@ -69,13 +75,12 @@ router.get("/download", function (req, res, next) {
   const offset = 0;
 
   // ADDITIONAL PARAM
-  const tablename = req.query.tablename || "";
-  const tabledesc = req.query.tabledesc || "";
+  const table_name = req.query.table_name || "";
 
   let { domain, seq } = getPageDesc(pageTitle, __dirname, __filename);
 
   // QUERY : DEFAULT PARAM + ADDITIONAL PARAM
-  let _query = [limit, offset, tablename, tabledesc];
+  let _query = [limit, offset, table_name]; // MODIFY_HERE
 
   // SEARCH : ADDITIONAL PARAM
   getQuery(db_target, domain, seq, _query).then((response) => {

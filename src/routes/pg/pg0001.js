@@ -33,4 +33,4 @@ router.get("/", function (req, res, next) {
   });
 });
 
-module.exports = { router, title: pageTitle };
+module.exports = { router, use_yn: "n", title: pageTitle };

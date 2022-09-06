@@ -82,12 +82,12 @@ function _genPug(domain = "te", seq = "te0000", pageTitle = "test 입니다.") {
   contents.push(`extends ../layout`);
   contents.push(``);
   contents.push(`block content`);
-  contents.push(`\t-var headers = ['modify_header_1', 'modify_header_2'];`);
+  // contents.push(`\t-var headers = ['modify_header_1', 'modify_header_2'];`);
   contents.push(`\t+pageHeader(domain, seq, desc)`);
   // contents.push(
   //   `\t//-+pageSearchBar([{placeholder:'MODIFY_INPUT_PLACE_HOLDER', id:'MODIFY_INPUT_ID_LOWERCASE', label:'MODIFY_INPUT_LABEL', ;value:'MODIFY_INPUT_VALUE'}])`
   // );
-  contents.push(`\t+pageSearchBar([search_bar])`); // 기본적으로 값이 없어도 있어야 form을 생성
+  contents.push(`\t+pageSearchBar(search_bar)`); // 기본적으로 값이 없어도 있어야 form을 생성
   contents.push(`\t+pageList(rows, headers)`);
   contents.push(`\t+pageFooter()`);
   contents.push(``);
@@ -133,41 +133,133 @@ function _genRoutes(domain = "te", seq = "te0000", pageTitle = "test 입니다."
   contents.push(``);
   contents.push(`const { getQuery } = require("../../libs/wsm-pg");`);
   contents.push(`const { getPageDesc } = require("../../libs/wsm-string");`);
-  contents.push(`const pageTitle = "MODIFY_PAGETITLE";`);
+  contents.push(`const { unlink } = require("fs");`);
+  contents.push(`const xlsx = require("xlsx");`);
   contents.push(``);
-  contents.push(`/* MODIFY_GET_HERE */`);
+  contents.push(`// PAGE title, headers, db target`);
+  contents.push(`// if needed, it will changeable with request parameter.`);
+  contents.push(`let pageTitle = "MODIFY_TITLE_HERE";`);
+  contents.push(
+    `let headers = ["header1", "header2", "header3"]; // MODIFY_HERE`
+  );
+  contents.push(`let db_target = "STEEM"; // MODIFY_HERE`);
+  contents.push(``);
   contents.push(`router.get("/", function (req, res, next) {`);
+  contents.push(`  // DEFAULT PARAM`);
+  contents.push(`  const limit = req.query.limit || 10;`);
+  contents.push(`  const offset = req.query.offset || 0;`);
   contents.push(``);
-  contents.push(`\tconst limit = req.query.limit || 10;`);
-  contents.push(`\tconst offset = req.query.offset || 0;`);
-  contents.push(`\tconst DB_TARGET = "MODIFY_HERE";`);
+  contents.push(`  // ADDITIONAL PARAM`);
+  contents.push(
+    `  // const example = req.query.example || "";  // MODIFY_HERE`
+  );
   contents.push(``);
   contents.push(
     `  let { domain, seq, desc } = getPageDesc(pageTitle, __dirname, __filename);`
   );
   contents.push(``);
-  contents.push(`  let _query = [limit,offset];`);
+  contents.push(`  // QUERY : DEFAULT PARAM + ADDITIONAL PARAM`);
+  contents.push(`  let _query = [limit, offset]; // MODIFY_HERE`);
   contents.push(``);
-  contents.push(`  getQuery(DB_TARGET, domain, seq, _query).then(`);
-  contents.push(`    (response) => {`);
-  contents.push("      res.render(`./${domain}/${seq}`, {");
-  contents.push(`        domain,`);
-  contents.push(`        seq,`);
-  contents.push(`        desc,`);
-  contents.push("        title: `${domain} - ${seq} : ${desc}`,");
-  contents.push(`        rows: response.rows,`);
-  contents.push(`        limit,`);
-  contents.push(`        offset,`);
-  contents.push(`        search_bar,`);
-  contents.push(`        headers,`);
+  contents.push(`  // SEARCH : ADDITIONAL PARAM`);
+  contents.push(`  const search_bar = [`);
+  contents.push(`//    {`);
+  contents.push(`//      placeholder: "LIKE:테이블명",`);
+  contents.push(`//      id: "tablename",`);
+  contents.push(`//      label: "테이블명",`);
+  contents.push(`//      value: tablename,`);
+  contents.push(`//    },`);
+  contents.push(`  ]; // MODIFY_HERE`);
   contents.push(``);
-  contents.push(`        // added search params`);
-  contents.push(`      });`);
-  contents.push(`    }`);
-  contents.push(`  );`);
+  contents.push(`  // DB QUERY & RETURN RESULT-SET`);
+  contents.push(
+    `  getQuery(db_target, domain, seq, _query).then((response) => {`
+  );
+  contents.push("    res.render(`./${domain}/${seq}`, {");
+  contents.push(`      domain,`);
+  contents.push(`      seq,`);
+  contents.push(`      desc,`);
+  contents.push("      title: `${domain} - ${seq} : ${desc}`,");
+  contents.push(`      rows: response.rows,`);
+  contents.push(`      fields: response.fields,`);
+  contents.push(`      limit,`);
+  contents.push(`      offset,`);
+  contents.push(`      search_bar,`);
+  contents.push(`      headers,`);
+  contents.push(``);
+  contents.push(`      // ADDTIONAL PARAM`);
+  contents.push(`//      tablename,`);
+  contents.push(`//      tabledesc,`);
+  contents.push(`    });`);
+  contents.push(`  });`);
   contents.push(`});`);
   contents.push(``);
-  contents.push(`module.exports = {router, title : pageTitle};`);
+  contents.push(`router.get("/download", function (req, res, next) {`);
+  contents.push(`  // DEFAULT PARAM - ignore limit & offset`);
+  contents.push(`  const limit = 65535; // MAX_VALUE IS 65535`);
+  contents.push(`  const offset = 0;`);
+  contents.push(``);
+  contents.push(`  // ADDITIONAL PARAM`);
+  contents.push(
+    `  // const example = req.query.example || "";  // MODIFY_HERE`
+  );
+  contents.push(``);
+  contents.push(
+    `  let { domain, seq } = getPageDesc(pageTitle, __dirname, __filename);`
+  );
+  contents.push(``);
+  contents.push(`  // QUERY : DEFAULT PARAM + ADDITIONAL PARAM`);
+  contents.push(`  let _query = [limit, offset];  // MODIFY_HERE`);
+  contents.push(``);
+  contents.push(`  // SEARCH : ADDITIONAL PARAM`);
+  contents.push(
+    `  getQuery(db_target, domain, seq, _query).then((response) => {`
+  );
+  contents.push(`    let count = 1;`);
+  contents.push(`    let ws_data = [];`);
+  contents.push(``);
+  contents.push(`    // SET HEADER`);
+  contents.push(`    ws_data[0] = new Array();`);
+  contents.push(`    ws_data[0].push("no");`);
+  contents.push(`    for (let header of headers) {`);
+  contents.push(`      ws_data[0].push(header);`);
+  contents.push(`    }`);
+  contents.push(``);
+  contents.push(`    // SET BODY`);
+  contents.push(`    for (let row of response.rows) {`);
+  contents.push(`      ws_data[count] = new Array();`);
+  contents.push(`      ws_data[count].push(count);`);
+  contents.push(`      for (let header of headers) {`);
+  contents.push(`        ws_data[count].push(row[header]);`);
+  contents.push(`      }`);
+  contents.push(`      count++;`);
+  contents.push(`    }`);
+  contents.push(``);
+  contents.push(`    // MAKE XLSX`);
+  contents.push(`    let wb = xlsx.utils.book_new();`);
+  contents.push(`    let ws = xlsx.utils.aoa_to_sheet(ws_data);`);
+  contents.push(`    xlsx.utils.book_append_sheet(wb, ws, "sheet1");`);
+  contents.push(``);
+  contents.push(`    let tm = new Date().getTime();`);
+  contents.push("    let filename = `${seq}-${tm}.xlsx`;");
+  contents.push(`    xlsx.writeFile(wb, filename);`);
+  contents.push(`    ws_data = []; // gc ?!`);
+  contents.push("    res.download(filename, `${seq}.xlsx`, function (err) {");
+  contents.push(`      if (err) {`);
+  contents.push(`        console.log(1, err);`);
+  contents.push(`      } else {`);
+  contents.push(`        // remove temporary file after download`);
+  contents.push(`        unlink(filename, function (err) {`);
+  contents.push(`          if (err) {`);
+  contents.push(`            console.log(2, err);`);
+  contents.push(`          }`);
+  contents.push(`        });`);
+  contents.push(`      }`);
+  contents.push(`    });`);
+  contents.push(`  });`);
+  contents.push(`});`);
+  contents.push(``);
+  contents.push(`module.exports = { router, use_yn : 'y', title: pageTitle };`);
 
   // 2. 파일 생성
   // js-route : src/routes/[domain]/[seq].js : 라우팅(get url) 정보

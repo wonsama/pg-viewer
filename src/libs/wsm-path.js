@@ -28,10 +28,18 @@ function getRoutes() {
     for (let fname of fnames) {
       let sc_desc = fname.split(".")[0];
       if (sc_desc != "index") {
-        results.push({
-          path: `/${folder}/${sc_desc}`,
-          require: `./src/routes/${folder}/${sc_desc}`,
-        });
+        let rpath = `../routes/${folder}/${sc_desc}`;
+        let target = require(rpath);
+        if (target.use_yn?.toUpperCase() != "N") {
+          results.push({
+            path: `/${folder}/${sc_desc}`,
+            require: `./src/routes/${folder}/${sc_desc}`,
+          });
+        } else {
+          console.log(
+            `not use routes : ${rpath} ( use_yn : ${target.use_yn} )`
+          );
+        }
       } else {
         results.push({
           path: `/${folder}`,

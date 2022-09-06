@@ -13,7 +13,7 @@ const { readdirSync, lstatSync } = require("fs");
 
 // PAGE title, headers, db target
 // if needed, it will changeable with request parameter.
-let pageTitle = "PG 화면 목록 조회";
+let pageTitle = "ST 화면 목록 조회";
 let headers = ["page_no", "page_title", "use_yn"]; // MODIFY_HERE
 let db_target = "STEEM"; // MODIFY_HERE
 
@@ -28,7 +28,7 @@ router.get("/", function (req, res, next) {
   const use_yn = req.query.use_yn || "";
 
   // let { domain, seq, desc } = getPageDesc(pageTitle, __dirname, __filename);
-  let domain = "pg";
+  let domain = "st";
   let seq = "";
   let desc = pageTitle;
 
@@ -89,7 +89,7 @@ router.get("/download", function (req, res, next) {
   const use_yn = req.query.use_yn || "";
 
   // let { domain, seq } = getPageDesc(pageTitle, __dirname, __filename);
-  let domain = "pg";
+  let domain = "st";
   let seq = "";
 
   // QUERY : DEFAULT PARAM + ADDITIONAL PARAM

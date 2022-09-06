@@ -1,11 +1,24 @@
 # TODO.md
 
-## NOT_YET
+> - 최신 작업 목록을 상단에 배치
+> - 작업 진행상태가 변경되면 알맞게 이동
+> - 작업이 완료(`DONE`) 되면 작업 완료일자를 기록 (na -> 현재일자)
+> - `NOT_YET` 또는 `ING` 상태에서 더 이상 작업 진행이 어려운 경우 `DROP` 으로 상태 변경
 
-- excel download 시 내부에 파일 생성되지 않도록 처리 (output.xlsx 가 생성 안되어야 됨)
-- excel export 구문을 공통 라이브러리 화 ( pg0000 참조 )
-- generator 부분 수정 처리 ( header, search_bar, download 등 자동 완성)
+## NOT_YET (미진행)
 
-## ING
+- (22.09.07 / na) pg, st 같은 페이지에서 `page_no` 를 클릭하면 대상 화면으로 이동처리
 
-## DONE
+## ING (진행중)
+
+- (22.09.06 / na) 각 페이지에서 목록으로 돌아가기 구현 : pgpg0001 -> pg -> all
+
+## DONE (완료)
+
+- (22.09.06 / 22.09.07) 페이지 목록 만들기 pg, st ... : 해당 페이지에 존재하는 모든 페이지 목록 로드 및 리스팅, routes 정보를 기반으로 생성
+- (22.09.06 / 22.09.06) excel download 시 내부에 파일 생성되지 않도록 처리 (output.xlsx 가 생성 안되어야 됨)
+- (22.09.06 / 22.09.06) generator 부분 수정 처리 ( header, search_bar, download 등 자동 완성)
+
+## DROP (포기)
+
+- (22.09.06 / 22.09.06) excel export 구문을 공통 라이브러리 화 ( pg0000 참조 ) : 자동 생성 구문으로 처리 (공통화 부분이 애매함)
