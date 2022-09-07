@@ -4,18 +4,18 @@
 const express = require("express");
 const router = express.Router();
 
-const { getQuery } = require("../../libs/wsm-pg");
-const { getPageDesc } = require("../../libs/wsm-string");
+// const { getQuery } = require("../../libs/wsm-pg");
+// const { getPageDesc } = require("../../libs/wsm-string");
 const { unlink } = require("fs");
 const xlsx = require("xlsx");
 
-const { readdirSync, lstatSync } = require("fs");
+const { readdirSync } = require("fs");
 
 // PAGE title, headers, db target
 // if needed, it will changeable with request parameter.
 let pageTitle = "ST 화면 목록 조회";
 let headers = ["page_no", "page_title", "use_yn"]; // MODIFY_HERE
-let db_target = "STEEM"; // MODIFY_HERE
+// let db_target = "STEEM"; // MODIFY_HERE
 
 router.get("/", function (req, res, next) {
   // DEFAULT PARAM
@@ -80,8 +80,8 @@ router.get("/", function (req, res, next) {
 
 router.get("/download", function (req, res, next) {
   // DEFAULT PARAM - ignore limit & offset
-  const limit = 65535; // MAX_VALUE IS 65535
-  const offset = 0;
+  // const limit = 65535; // MAX_VALUE IS 65535
+  // const offset = 0;
 
   // ADDITIONAL PARAM
   const page_no = req.query.page_no || "";
@@ -90,7 +90,7 @@ router.get("/download", function (req, res, next) {
 
   // let { domain, seq } = getPageDesc(pageTitle, __dirname, __filename);
   let domain = "st";
-  let seq = "";
+  // let seq = "";
 
   // QUERY : DEFAULT PARAM + ADDITIONAL PARAM
   // let _query = [limit, offset, page_no, page_title]; // MODIFY_HERE
@@ -151,6 +151,7 @@ function getRows(domain, page_no, page_title, use_yn) {
   for (let fname of fnames) {
     let target = require(`./${fname}`);
     rows.push({
+      domain_no: domain,
       page_no: fname,
       page_title: target.title,
       use_yn: target.use_yn ? target.use_yn.toUpperCase() : "Y",

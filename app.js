@@ -63,7 +63,7 @@ app.use(bodyParser.json()); // json 등록
 app.use(bodyParser.urlencoded({ extended: false })); // URL-encoded 등록
 
 // 라우팅 설정
-app.use("/", require("./src/routes/index"));
+app.use("/", require("./src/routes/index").router);
 let routes = getRoutes();
 for (let r of routes) {
   app.use(r.path, require(r.require).router);
