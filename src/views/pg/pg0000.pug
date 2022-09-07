@@ -1,10 +1,34 @@
 extends ../layout
 
+mixin _pageListHeader0000(headers)
+  thead(class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400")
+    tr
+      each item, no in headers
+        th(scope="col" class="py-3 px-6")=item
+
+mixin _pageListBody0000(rows, headers)
+  tbody
+      each itemr, nor in rows
+        tr(class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600")
+        each itemh, noh in headers
+          if headers[noh] == 'tablename'
+            td(class="py-4 px-6") 
+              a(href=`/pg/pg0002?limit=10&offset=0&table_name=${itemr[headers[noh]]}`) #{itemr[headers[noh]]}
+          else
+            td(class="py-4 px-6") #{itemr[headers[noh]]} #{a}
+
+mixin pageList0000(rows, headers)
+  div(class="overflow-x-auto relative shadow-md sm:rounded-lg")
+    table(class="w-full text-sm text-left text-gray-500 dark:text-gray-400")
+      +_pageListHeader0000(headers)
+      +_pageListBody0000(rows, headers)
+
 block content
   +pageHeader(domain, seq, desc)
   +pageSearchBar(search_bar)
-  +pageList(rows, headers)
+  +pageList0000(rows, headers)
   +pageFooter()
+  +_pageListBody(rows, headers)
   
 
 block scripts 

@@ -10,14 +10,18 @@ mixin _pageListBody(rows, headers)
       each itemr, nor in rows
         tr(class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600")
         each itemh, noh in headers
-          if headers[noh] == 'domain_no' 
+          -var http_idx = `${itemr[headers[noh]]}`.indexOf('http')
+          if headers[noh] == 'domain_no'
             td(class="py-4 px-6") 
               a(href=`/${itemr[headers[noh]]}`) #{itemr[headers[noh]]}
-          else if headers[noh] == 'page_no' 
+          else if headers[noh] == 'page_no' && itemr['use_yn'] != 'N' 
             td(class="py-4 px-6") 
               a(href=`/${itemr['domain_no']}/${itemr[headers[noh]]}`) #{itemr[headers[noh]]}
+          else if http_idx == 0
+            td(class="py-4 px-6") 
+              a(href=`${itemr[headers[noh]]}` target='_blank') #{itemr[headers[noh]]}
           else
-            td(class="py-4 px-6") #{itemr[headers[noh]]}
+            td(class="py-4 px-6") #{itemr[headers[noh]]} #{a}
 
 mixin pageList(rows, headers)
   div(class="overflow-x-auto relative shadow-md sm:rounded-lg")

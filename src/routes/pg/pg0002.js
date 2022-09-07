@@ -49,8 +49,6 @@ router.get("/", function (req, res, next) {
 
   // DB QUERY & RETURN RESULT-SET
   getQuery(db_target, domain, seq, _query).then((response) => {
-    console.log("response.rows", response.rows);
-
     res.render(`./${domain}/${seq}`, {
       domain,
       seq,
