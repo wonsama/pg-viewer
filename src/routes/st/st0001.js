@@ -12,7 +12,7 @@ const xlsx = require("xlsx");
 // PAGE title, headers, db target
 // if needed, it will changeable with request parameter.
 let pageTitle = "커뮤니티 기준 조회 (기본 : 스코판 - 1364110)";
-let headers = ["author", "link", "title", "created_at"]; // MODIFY_HERE
+let headers = ["author", "title", "link", "created_at"]; // MODIFY_HERE
 let db_target = "STEEM"; // MODIFY_HERE
 const DEFAULT_COMMUNITY_ID = "1364110"; // 미 기입 시 스코판
 
