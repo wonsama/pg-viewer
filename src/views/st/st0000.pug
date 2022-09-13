@@ -1,11 +1,35 @@
 extends ../layout
 
+mixin _pageListHeaderRemix(headers)
+  thead(class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400")
+    tr
+      each item, no in headers
+        th(scope="col" class="py-3 px-6")=item
+
+mixin _pageListBodyRemix(rows, headers)
+  tbody
+      each itemr, nor in rows
+        tr(class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600")
+        each itemh, noh in headers
+          if headers[noh] == 'author'
+            td(class="py-4 px-6") 
+              a(href=`/st/st0000?author=${itemr[headers[noh]]}`) #{itemr[headers[noh]]}
+          else if headers[noh] == 'link'
+            td(class="py-4 px-6") 
+              a(href=`${itemr[headers[noh]]}` target='_blank') #{itemr[headers[noh]]}
+          else
+            td(class="py-4 px-6") #{itemr[headers[noh]]} #{a}
+
+mixin pageListRemix(rows, headers)
+  div(class="overflow-x-auto relative shadow-md sm:rounded-lg")
+    table(class="w-full text-sm text-left text-gray-500 dark:text-gray-400")
+      +_pageListHeaderRemix(headers)
+      +_pageListBodyRemix(rows, headers)
+
 block content
-  //- -var headers = ['post_id', 'link', 'title', 'created_at'];
   +pageHeader(domain, seq, desc)
-  //- +searchSingle([{placeholder:'@를 제외한 계정명을 입력', id:'author', label:'author'}])
   +pageSearchBar([{placeholder:'@를 제외한 계정명을 입력', id:'author', label:'계정명', value:author}])
-  +pageList(rows, headers)
+  +pageListRemix(rows, headers)
   +pageFooter()
   
 
