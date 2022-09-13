@@ -8,7 +8,7 @@ const { getPageDesc } = require("../../libs/wsm-string");
 const pageTitle = "스팀잇 최신글 조회";
 const db_target = "STEEM";
 
-const headers = ["post_id", "author", "link", "title", "created_at"];
+const headers = ["author", "link", "title", "created_at"];
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
