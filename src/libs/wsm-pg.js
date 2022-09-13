@@ -30,11 +30,20 @@ function _load(domain = "st", seq = "0000", params = []) {
   }
 
   // let split = sql.replace(/\n/gi, "").split("\r");
-  let split = sql.split("\r");
+  let split = sql.replace(/\n/gi, "\r").split("\r");
+  // split = Array.isArray(split)?sql.split("\n");
   // console.log("split", split);
 
   split = split.filter((x) => x.indexOf(":exist()") == -1);
-  split = split.map((x) => x.replace(/\:exist\(.*\)\s/, ""));
+  // split = split.map((x) => x.replace(/\:exist\(.*\)\s/, ""));
+  split = split.map((x) => {
+    if (x.indexOf(":notexist()") >= 0) {
+      return x.replace(":notexist()", "");
+    } else if (/\:notexist\(.*\)/.test(x)) {
+      return "";
+    }
+    return x.replace(/\:exist\(.*\)\s/, "");
+  });
 
   return split.join("\r\n");
 }
@@ -48,6 +57,8 @@ function _load(domain = "st", seq = "0000", params = []) {
  * @returns 쿼리 수행 결과
  */
 async function getQuery(prefix, domain, seq, params) {
+  console.log("_load(domain, seq, params)", _load(domain, seq, params));
+
   let client = getClient(prefix);
 
   await client.connect();
@@ -55,7 +66,6 @@ async function getQuery(prefix, domain, seq, params) {
   let res = await client.query(_load(domain, seq, params), []);
   client.end();
 
-  // console.log("_load(domain, seq, params)", _load(domain, seq, params));
   // console.log(res);
 
   return {
@@ -104,4 +114,5 @@ function getClient(prefix = "IWP_DEV") {
 
 module.exports = {
   getQuery,
+  _load,
 };

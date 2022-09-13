@@ -123,11 +123,14 @@ router.get("/download", function (req, res, next) {
 
 function getRows() {
   let rows = [];
-  rows.push({
-    domain_no: "pg",
-    page_title: "postgresql 관련",
-    use_yn: "Y",
-  });
+  let admin = process.env.IS_ADMIN_MODE || "N";
+  if (admin.toUpperCase() == "Y") {
+    rows.push({
+      domain_no: "pg",
+      page_title: "postgresql 관련",
+      use_yn: "Y",
+    });
+  }
   rows.push({
     domain_no: "st",
     page_title: "STEEM 관련",

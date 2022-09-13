@@ -14,7 +14,7 @@ let db_target = "STEEM";
 
 router.get("/", function (req, res, next) {
   // DEFAULT PARAM
-  const limit = req.query.limit || 10;
+  const limit = req.query.limit || process.env.DEF_LIMIT_SIZE || 10;
   const offset = req.query.offset || 0;
 
   // ADDITIONAL PARAM

@@ -146,7 +146,9 @@ function _genRoutes(domain = "te", seq = "te0000", pageTitle = "test 입니다."
   contents.push(``);
   contents.push(`router.get("/", function (req, res, next) {`);
   contents.push(`  // DEFAULT PARAM`);
-  contents.push(`  const limit = req.query.limit || 10;`);
+  contents.push(
+    `  const limit = req.query.limit || process.env.DEF_LIMIT_SIZE || 10;`
+  );
   contents.push(`  const offset = req.query.offset || 0;`);
   contents.push(``);
   contents.push(`  // ADDITIONAL PARAM`);

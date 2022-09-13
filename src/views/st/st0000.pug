@@ -1,7 +1,7 @@
 extends ../layout
 
 block content
-  -var headers = ['post_id', 'link', 'title', 'created_at'];
+  //- -var headers = ['post_id', 'link', 'title', 'created_at'];
   +pageHeader(domain, seq, desc)
   //- +searchSingle([{placeholder:'@를 제외한 계정명을 입력', id:'author', label:'author'}])
   +pageSearchBar([{placeholder:'@를 제외한 계정명을 입력', id:'author', label:'계정명', value:author}])

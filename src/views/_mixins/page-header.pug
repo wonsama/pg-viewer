@@ -7,8 +7,11 @@ mixin pageHeader(domain, seq, desc)
     if domain== 'all'
       span &nbsp;
     else if seq == ''
-      a(href=`/`) 🔼
+      a(href=`/` title=`${t('navigate.up')}`) 🔼
     else 
-      a(href=`/${domain}`) 🔼
+      a(href=`#` onclick='history.back();' title=`${t('navigate.back')}`) ⏪ 
+      span &nbsp;
+      a(href=`/${domain}` title=`${t('navigate.up')}`) 🔼
+      
   br
   br  
