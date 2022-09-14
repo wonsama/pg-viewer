@@ -8,6 +8,10 @@ const { getQuery } = require("../../libs/wsm-pg");
 const { getPageDesc } = require("../../libs/wsm-string");
 const { unlink } = require("fs");
 const xlsx = require("xlsx");
+const MarkdownIt = require("markdown-it"),
+  md = new MarkdownIt();
+const Autolinker = require("autolinker");
+const autolinker = new Autolinker([]);
 
 // PAGE title, headers, db target
 // if needed, it will changeable with request parameter.
@@ -63,6 +67,34 @@ router.get("/", function (req, res, next) {
       // ADDTIONAL PARAM
       community_id,
       author,
+    });
+  });
+});
+
+router.get("/detail", function (req, res, next) {
+  // DEFAULT PARAM
+  const limit = req.query.limit || process.env.DEF_LIMIT_SIZE || 10;
+  const offset = req.query.offset || 0;
+
+  // ADDITIONAL PARAM
+  const post_id = req.query.post_id || ""; // MODIFY_HERE
+
+  let { domain, seq, desc } = getPageDesc(pageTitle, __dirname, __filename);
+
+  // QUERY : DEFAULT PARAM + ADDITIONAL PARAM
+  let _query = [limit, offset, post_id]; // MODIFY_HERE
+
+  // DB QUERY & RETURN RESULT-SET
+  getQuery(db_target, domain, `${seq}-1`, _query).then((response) => {
+    let mbody = md
+      .render(response.rows[0].body)
+      .replaceAll("\n", "<br />")
+      .replaceAll("&lt;", "<")
+      .replaceAll("&gt;", ">");
+
+    res.json({
+      ...response,
+      markdown: autolinker.link(mbody),
     });
   });
 });

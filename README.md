@@ -33,3 +33,23 @@ npx tailwindcss -i ./configs/tailwind/input.css -o ./src/public/css/tailwind.css
 ## TAILWIND DOCS
 
 - [flowbite-docs](https://flowbite.com/docs/forms/input-field/)
+
+
+## added
+
+```txt
+info Direct dependencies
+└─ markdown-it@13.0.1
+info All dependencies
+├─ argparse@2.0.1
+├─ entities@3.0.1
+├─ linkify-it@4.0.1
+├─ markdown-it@13.0.1
+├─ mdurl@1.0.1
+└─ uc.micro@1.0.6
+
+info Direct dependencies
+└─ autolinker@4.0.0
+info All dependencies
+└─ autolinker@4.0.0
+```

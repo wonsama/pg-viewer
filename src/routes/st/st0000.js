@@ -22,6 +22,15 @@ router.get("/", function (req, res, next) {
 
   let _query = [limit, offset, author]; // MODIFY_HERE
 
+  let search_bar = [
+    {
+      placeholder: "@를 제외한 계정명을 입력",
+      id: "author",
+      label: "계정명",
+      value: author,
+    },
+  ];
+
   getQuery(db_target, domain, seq, _query).then((response) => {
     res.render(`./${domain}/${seq}`, {
       domain,
@@ -33,6 +42,7 @@ router.get("/", function (req, res, next) {
       limit,
       offset,
       author,
+      search_bar,
     });
   });
 });

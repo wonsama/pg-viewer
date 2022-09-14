@@ -1,8 +1,18 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /* overflow: hidden; */
+    /* height: 100%; */
 }
 
 a {
   color: #00B7FF;
+}
+
+img.author{
+  max-width: 50px;
+}
+
+td.pointer{
+  cursor: pointer;
 }

@@ -20,6 +20,12 @@ mixin _pageListBodyRemix(rows, headers)
           else if headers[noh] == 'link'
             td(class="py-4 px-6") 
               a(href=`${itemr[headers[noh]]}` target='_blank') #{itemr[headers[noh]]}
+          else if headers[noh] == 'title'
+            - var hasKo = hasKorean(itemr[headers[noh]])
+            if hasKo
+              td(class="pointer py-4 px-6 text-fuchsia-400" onclick=`postShow(${itemr['id']})`) #{itemr[headers[noh]]} #{a}
+            else
+              td(class="pointer py-4 px-6" onclick=`postShow(${itemr['id']})`) #{itemr[headers[noh]]} #{a}
           else
             td(class="py-4 px-6") #{itemr[headers[noh]]} #{a}
 
@@ -29,11 +35,29 @@ mixin pageListRemix(rows, headers)
       +_pageListHeaderRemix(headers)
       +_pageListBodyRemix(rows, headers)
 
+mixin pageModal()
+  div(class="py-12 hidden bg-gray-700 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0" id="modal"  onclick="postHide(event);" data-bg="Y")
+    div(role="alert" class="container mx-auto w-11/12 md:w-2/3")
+      div(class="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400 rounded-3xl pl-8")
+        h1(class="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4" id="modal_title") TITLE
+        hr
+        div(class="mx-auto py-8 pr-8 max-h-96 overflow-y-scroll p-8" id="modal_content") CONTENTS          
+        hr  
+        button(class="cursor-pointer absolute top-0 right-0 mt-4 mr-5 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out rounded focus:ring-2 focus:outline-none focus:ring-gray-600" aria-label="close modal" role="button" data-bg="Y" )
+          svg(xmlns="http://www.w3.org/2000/svg"  class="icon icon-tabler icon-tabler-x" width="20" height="20" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"  data-bg="Y" )
+            path(stroke="none" d="M0 0h24v24H0z")
+            line(x1="18" y1="6" x2="6" y2="18")
+            line(x1="6" y1="6" x2="18" y2="18")
+
 block content
+  script
+    - function hasKorean(source) { const check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; return check.test(source.replace(/\|/gi,'')); };
   +pageHeader(domain, seq, desc)
   +pageSearchBar(search_bar)
   +pageListRemix(rows, headers)
   +pageFooter()
+  +pageModal()
+  
 
 block scripts 
   script(src='/js/st/st0001.js')
