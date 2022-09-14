@@ -1,5 +1,7 @@
 extends ../layout
 
+
+
 mixin _pageListHeaderRemix(headers)
   thead(class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400")
     tr
@@ -17,6 +19,12 @@ mixin _pageListBodyRemix(rows, headers)
           else if headers[noh] == 'link'
             td(class="py-4 px-6") 
               a(href=`${itemr[headers[noh]]}` target='_blank') #{itemr[headers[noh]]}
+          else if headers[noh] == 'title'
+            - var hasKo = hasKorean(itemr[headers[noh]])
+            if hasKo
+              td(class="py-4 px-6 text-fuchsia-400") #{itemr[headers[noh]]} #{a}
+            else
+              td(class="py-4 px-6") #{itemr[headers[noh]]} #{a}
           else
             td(class="py-4 px-6") #{itemr[headers[noh]]} #{a}
 
@@ -27,6 +35,8 @@ mixin pageListRemix(rows, headers)
       +_pageListBodyRemix(rows, headers)
 
 block content
+  script
+    - function hasKorean(source) { const check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; return check.test(source); };
   +pageHeader(domain, seq, desc)
   +pageSearchBar([{placeholder:'@를 제외한 계정명을 입력', id:'author', label:'계정명', value:author}])
   +pageListRemix(rows, headers)
