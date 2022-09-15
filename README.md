@@ -52,4 +52,14 @@ info Direct dependencies
 └─ autolinker@4.0.0
 info All dependencies
 └─ autolinker@4.0.0
+
+info Direct dependencies
+└─ axios@0.27.2
+info All dependencies
+├─ asynckit@0.4.0
+├─ axios@0.27.2
+├─ combined-stream@1.0.8
+├─ delayed-stream@1.0.0
+├─ follow-redirects@1.15.2
+└─ form-data@4.0.0
 ```
