@@ -2,10 +2,21 @@
 
 //- param : placeholder, id, label, value
 mixin _pageSearchBarItem(param)
-  div
-    label(for=`${param.id}` class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300") #{param.label}
-      input(type="text" id=`${param.id}` name=`${param.id}` class=`search-bar-item bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500` placeholder=`${param.placeholder}` value=`${param.value?param.value:''}`)
-  
+  if param.type && param.type == 'sel'
+    div
+      label(for=`${param.id}` class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300") #{param.label}
+        select(id=`${param.id}` name=`${param.id}` class="search-bar-item bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500")
+          option(value=``) select options
+          for item, no in param.options
+            if param.value == item.value
+              option(value=`${item.value}` selected)=item.key
+            else
+              option(value=`${item.value}`)=item.key
+  else
+    div
+      label(for=`${param.id}` class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300") #{param.label}
+        input(type="text" id=`${param.id}` name=`${param.id}` class=`search-bar-item bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500` placeholder=`${param.placeholder}` value=`${param.value?param.value:''}`)
+    
 mixin pageSearchBar(params)
   form(method='get' id="formPageSearchBar")
     input(type='hidden' id='limit' name='limit' value=`${limit}`)
@@ -17,9 +28,12 @@ mixin pageSearchBar(params)
       if(params.length>0)
         label(for=`btnPageSearchBar` class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300") 조회하기
           button(type="submit" id=`btnPageSearchBar` class=`stext-white bg-blue-700 hover:bg-blue-800 border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`) SEARCH
-        label(for=`btnPageDownload` class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300") 다운로드
+        if _default && _default.download_yn == 'Y'
+          label(for=`btnPageDownload` class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300") 다운로드
+            button(type="submit" id=`btnPageDownload`  formaction=`/${domain}/${seq}/download` class=`stext-white bg-gray-700 hover:bg-gray-800 border text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5`) DOWNLOAD
           //- button(type="submit" id=`btnPageDownload`  formaction=`/${domain}/${seq}/download` disabled class=`stext-white bg-blue-700 hover:bg-blue-800 border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`) DOWNLOAD
-          button(type="submit" id=`btnPageDownload`  formaction=`/${domain}/${seq}/download` disabled class=`stext-white bg-gray-700 hover:bg-gray-800 border text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5`) DOWNLOAD
+          
+            
 
         //- button(type="submit" id='btnSearch' class="stext-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800") SEARCH
 

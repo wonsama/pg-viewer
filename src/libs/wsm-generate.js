@@ -188,6 +188,7 @@ function _genRoutes(domain = "te", seq = "te0000", pageTitle = "test 입니다."
   contents.push(`      offset,`);
   contents.push(`      search_bar,`);
   contents.push(`      headers,`);
+  contents.push(`      _default: JSON.parse(res.get("_default")),`);
   contents.push(``);
   contents.push(`      // ADDTIONAL PARAM`);
   contents.push(`//      tablename,`);

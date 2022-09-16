@@ -123,7 +123,7 @@ router.get("/download", function (req, res, next) {
 
 function getRows() {
   let rows = [];
-  let admin = process.env.IS_ADMIN_MODE || "N";
+  let admin = process.env.ADMIN_YN || "N";
   if (admin.toUpperCase() == "Y") {
     rows.push({
       domain_no: "pg",

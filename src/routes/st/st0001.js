@@ -15,7 +15,7 @@ const autolinker = new Autolinker([]);
 
 // PAGE title, headers, db target
 // if needed, it will changeable with request parameter.
-let pageTitle = "커뮤니티 기준 조회 (기본 : 스코판 - 1364110)";
+let pageTitle = "커뮤니티 기준 조회 (기본 : 스코판)";
 let headers = ["author", "title", "link", "created_at"]; // MODIFY_HERE
 let db_target = "STEEM"; // MODIFY_HERE
 const DEFAULT_COMMUNITY_ID = "1364110"; // 미 기입 시 스코판
@@ -37,10 +37,15 @@ router.get("/", function (req, res, next) {
   // SEARCH : ADDITIONAL PARAM
   const search_bar = [
     {
-      placeholder: "EQ:커뮤니티 아이디",
+      placeholder: "SEL:커뮤니티",
       id: "community_id",
-      label: "커뮤니티 아이디",
+      label: "커뮤니티",
       value: community_id,
+      type: "sel",
+      options: [
+        { value: 1364110, key: "스코판" },
+        { value: 1373943, key: "개발자그룹" },
+      ],
     },
     {
       placeholder: "EQ:계정명",
@@ -63,6 +68,7 @@ router.get("/", function (req, res, next) {
       offset,
       search_bar,
       headers,
+      _default: JSON.parse(res.get("_default")),
 
       // ADDTIONAL PARAM
       community_id,

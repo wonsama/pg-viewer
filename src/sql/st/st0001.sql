@@ -1,5 +1,5 @@
 -- file : st0001.sql
--- title : MODIFY_PAGE_TITLE
+-- title : 컨텐츠 목록 보기
 -- @since 2022-09-13T16:26:36.415Z (UTC)
 select hp.id, hp.author, hp.permlink, to_char(hp.created_at + INTERVAL '9 HOUR', 'YYYY-MM-DD HH24:MI:SS') created_at, 'https://steemit.com/@' || hp.author || '/' || hp.permlink as link, hpc.title
 from hive_posts hp 

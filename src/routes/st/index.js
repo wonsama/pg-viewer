@@ -18,6 +18,8 @@ let headers = ["page_no", "page_title", "use_yn"]; // MODIFY_HERE
 // let db_target = "STEEM"; // MODIFY_HERE
 
 router.get("/", function (req, res, next) {
+  console.log("download_yn", res.get("download_yn"));
+
   // DEFAULT PARAM
   const limit = 9999; // MAX LIMIT is 9999
   const offset = 0;
@@ -71,6 +73,7 @@ router.get("/", function (req, res, next) {
     offset,
     search_bar,
     headers,
+    _default: JSON.parse(res.get("_default")),
 
     // ADDTIONAL PARAM
     page_no,

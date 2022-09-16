@@ -62,12 +62,35 @@ app.use(session(sess));
 app.use(bodyParser.json()); // json 등록
 app.use(bodyParser.urlencoded({ extended: false })); // URL-encoded 등록
 
+/// add req param
+// app.use("/**", function (err, req, res, next) {
+//   console.log("set");
+//   res.set({
+//     download_yn: "Y",
+//   });
+
+//   next();
+// });
+
+// DEFAULT COMMON PARAMETER SETTING
+// https://expressjs.com/ko/guide/writing-middleware.html
+app.use(function (req, res, next) {
+  // 문자열로 Key-Value 형태로 저장해야 되서 JSON.stringify 형태로 처리
+  res.set({
+    _default: JSON.stringify({
+      download_yn: process.env.DOWNLOAD_YN || "N",
+    }),
+  });
+  next();
+});
+
 // 라우팅 설정
 app.use("/", require("./src/routes/index").router);
 let routes = getRoutes();
 for (let r of routes) {
   app.use(r.path, require(r.require).router);
 }
+console.log("init");
 // app.use("/st/st0000", require("./src/routes/st/st0000"));
 // app.use("/pg/pg0000", require("./src/routes/pg/pg0000"));
 

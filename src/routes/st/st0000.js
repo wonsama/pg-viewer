@@ -43,6 +43,7 @@ router.get("/", function (req, res, next) {
       offset,
       author,
       search_bar,
+      _default: JSON.parse(res.get("_default")),
     });
   });
 });
