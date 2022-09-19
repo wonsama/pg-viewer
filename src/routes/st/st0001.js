@@ -16,7 +16,7 @@ const autolinker = new Autolinker([]);
 // PAGE title, headers, db target
 // if needed, it will changeable with request parameter.
 let pageTitle = "커뮤니티 기준 조회 (기본 : 스코판)";
-let headers = ["author", "title", "link", "created_at"]; // MODIFY_HERE
+let headers = ["author", "title", "link", "time_disp", "created_at"]; // MODIFY_HERE
 let db_target = "STEEM"; // MODIFY_HERE
 const DEFAULT_COMMUNITY_ID = "1364110"; // 미 기입 시 스코판
 
@@ -45,6 +45,7 @@ router.get("/", function (req, res, next) {
       options: [
         { value: 1364110, key: "스코판" },
         { value: 1373943, key: "개발자그룹" },
+        { value: 1336982, key: "Korea • 한국 • KR • KO" },
       ],
     },
     {
