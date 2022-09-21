@@ -132,6 +132,11 @@ function getRows() {
     });
   }
   rows.push({
+    domain_no: "yt",
+    page_title: "YOUTUBE 관련",
+    use_yn: "Y",
+  });
+  rows.push({
     domain_no: "st",
     page_title: "STEEM 관련",
     use_yn: "Y",
