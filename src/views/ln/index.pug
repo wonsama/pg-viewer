@@ -1,0 +1,13 @@
+//- file : index.pug
+//- title : MODIFY_PAGE_TITLE
+//- @since 2022-08-31T11:27:53.879Z (UTC)
+extends ../layout
+
+block content
+	+pageHeader(domain, seq, desc)
+	+pageSearchBar(search_bar)
+	+pageList(rows, headers)
+	+pageFooter()
+
+block scripts 
+	script(src='/js/ln/index.js')
